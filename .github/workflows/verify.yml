@@ -28,7 +28,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y ripgrep
       
       # هنا تم إضافة التعديل لتجنب تثبيت حزمة tools المحذوفة
-      - uses: android-actions/setup-android@v3
+      - uses: android-actions/setup-android@v4
         with:
           packages: ""
           

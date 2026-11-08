@@ -4,7 +4,7 @@ on:
   push:
     branches: ['**']
   pull_request:
-  workflow_dispatch: # <--- تمت الإضافة ليسمح بالتشغيل اليدوي
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -26,8 +26,13 @@ jobs:
           gradle-version: '8.13'
           cache-read-only: ${{ github.event_name == 'pull_request' }}
           
+      # إعطاء صلاحية التنفيذ للسكربتات
       - name: Grant execute permission
-        run: chmod +x ./tools/*.sh  # <--- تمت الإضافة لإصلاح خطأ الصلاحيات
+        run: chmod +x ./tools/*.sh
+        
+      # تثبيت أداة ripgrep المطلوبة للسكربت
+      - name: Install ripgrep
+        run: sudo apt-get update && sudo apt-get install -y ripgrep
 
       - name: Static security checks
         run: ./tools/static_checks.sh

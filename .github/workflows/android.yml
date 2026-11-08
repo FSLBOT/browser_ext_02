@@ -4,6 +4,7 @@ on:
   push:
     branches: ['**']
   pull_request:
+  workflow_dispatch: # <--- تمت الإضافة ليسمح بالتشغيل اليدوي
 
 permissions:
   contents: read
@@ -14,20 +15,29 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
+          
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.13'
           cache-read-only: ${{ github.event_name == 'pull_request' }}
+          
+      - name: Grant execute permission
+        run: chmod +x ./tools/*.sh  # <--- تمت الإضافة لإصلاح خطأ الصلاحيات
+
       - name: Static security checks
         run: ./tools/static_checks.sh
+        
       - name: Lint, tests and build
         run: ./gradlew --no-daemon clean lintDebug testDebugUnitTest assembleDebug bundleRelease
+        
       - name: Checksums
         run: sha256sum app/build/outputs/apk/debug/app-debug.apk app/build/outputs/bundle/release/app-release.aab | tee SHA256SUMS.txt
+        
       - uses: actions/upload-artifact@v4
         with:
           name: median-ci-${{ github.sha }}

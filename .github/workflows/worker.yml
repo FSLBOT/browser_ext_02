@@ -3,10 +3,8 @@ name: Unzip Nezzer Files
 on:
   workflow_dispatch:
 
-# إضافة صلاحيات الكتابة للمحتوى وللـ workflows
 permissions:
   contents: write
-  workflows: write
 
 jobs:
   unzip-and-push:

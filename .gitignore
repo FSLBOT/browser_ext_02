@@ -1,0 +1,12 @@
+.gradle/
+**/build/
+out/
+_eval_tmp/
+local.properties
+gradle.local.properties
+*.jks
+*.keystore
+*.p12
+*.apk
+*.aab
+*.idsig

@@ -26,7 +26,12 @@ jobs:
           gradle-version: '8.13'
       - name: Install static check dependency
         run: sudo apt-get update && sudo apt-get install -y ripgrep
+      
+      # هنا تم إضافة التعديل لتجنب تثبيت حزمة tools المحذوفة
       - uses: android-actions/setup-android@v3
+        with:
+          packages: ""
+          
       - name: Install SDK
         run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
       - name: Enable shell entry points

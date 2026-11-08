@@ -1,0 +1,31 @@
+name: Unzip Nezzer Files
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  unzip-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Unzip and Push
+        run: |
+          # فك ضغط الملف
+          unzip -o nezer.zip
+          
+          # حذف ملف الزيب الأصلي فقط
+          rm nezer.zip
+          
+          # إعدادات الـ Git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # إضافة الملفات ورفعها
+          git add -A
+          git commit -m "تم فك الضغط وحذف ملف الزيب" || echo "لا توجد تغييرات"
+          git push

@@ -27,7 +27,7 @@ jobs:
           ./build.sh
 
       - name: Upload APK
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: titanium-apk
           # هذا المسار هو المكان الذي يضع فيه build.sh ملف الـ APK عادةً

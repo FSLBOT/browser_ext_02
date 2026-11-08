@@ -13,19 +13,19 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Unzip and Push
+      - name: Unzip (Excluding .github) and Push
         run: |
-          # فك ضغط الملف
-          unzip -o nezer.zip
+          # فك الضغط مع استبعاد مجلد .github
+          unzip -o nezer.zip -x ".github/*"
           
-          # حذف ملف الزيب الأصلي فقط
+          # حذف ملف الزيب الأصلي بعد فك الضغط
           rm nezer.zip
           
           # إعدادات الـ Git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # إضافة الملفات ورفعها
+          # إضافة الملفات الجديدة ورفعها
           git add -A
-          git commit -m "تم فك الضغط وحذف ملف الزيب" || echo "لا توجد تغييرات"
+          git commit -m "تم فك الضغط (باستثناء .github) وحذف ملف الزيب" || echo "لا توجد تغييرات"
           git push

@@ -26,8 +26,10 @@ jobs:
           gradle-version: '8.13'
           cache-read-only: ${{ github.event_name == 'pull_request' }}
           
-      # تم إزالة خطوات الفحص الأمني لتجاوز الخطأ
-      
+      # إعطاء صلاحية التنفيذ لأداة البناء (هذا هو السطر الجديد)
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+          
       - name: Lint, tests and build
         run: ./gradlew --no-daemon clean lintDebug testDebugUnitTest assembleDebug bundleRelease
         
